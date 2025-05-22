@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'app/app.dart';
 import 'core/bloc/bloc_observer.dart';
@@ -20,6 +21,9 @@ void main() async {
     WorkManagerService().init(),
   ]);
   sl<SqfliteHelper>().intiDB();
+  if (await Permission.notification.isDenied) {
+    await Permission.notification.request();
+  }
 
   runApp(
     BlocProvider(

@@ -14,6 +14,7 @@ class LocalNotificationService {
       FlutterLocalNotificationsPlugin();
   static StreamController<NotificationResponse> streamController =
       StreamController();
+
   static onTap(NotificationResponse notificationResponse) {
     // log(notificationResponse.id!.toString());
     // log(notificationResponse.payload!.toString());
@@ -95,10 +96,11 @@ class LocalNotificationService {
   }
 
   //showSchduledNotification
-  static void showSchduledNotification(
-      {required DateTime curretDate,
-      required TimeOfDay schduledTime,
-      required TaskModel taskModel}) async {
+  static void showSchduledNotification({
+    required DateTime curretDate,
+    required TimeOfDay schduledTime,
+    required TaskModel taskModel,
+  }) async {
     const AndroidNotificationDetails android = AndroidNotificationDetails(
       'schduled notification',
       'id 3',
@@ -205,4 +207,3 @@ class LocalNotificationService {
 //6.on Tab. [Done]
 //7.Daily Notifications at specific time. [Done]
 //8.Real Example in To Do App.
-
