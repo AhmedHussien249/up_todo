@@ -35,10 +35,9 @@ class UpTodo extends StatelessWidget {
               },
               theme: getAppLightThemeData(),
               darkTheme: getAppDarkThemeData(),
-              themeMode: BlocProvider
-                  .of<TaskCubit>(context)
-                  .isDark ? ThemeMode.dark : ThemeMode.light,
-
+              themeMode: BlocProvider.of<TaskCubit>(context).isDark
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
               home: const SplashScreen(),
             );
           },

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -87,12 +88,13 @@ class LocalNotificationService {
       'body',
       RepeatInterval.daily,
       details,
-      payload: "Payload Data", androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      payload: "Payload Data",
     );
   }
 
   //showSchduledNotification
-  static void showSchduledNotification() async {
+  static void showSchduledNotification({required DateTime currentDate,
+  required TimeOfDay schduledTime,}) async {
     const AndroidNotificationDetails android = AndroidNotificationDetails(
       'schduled notification',
       'id 3',
@@ -114,18 +116,19 @@ class LocalNotificationService {
       2,
       'Schduled Notification',
       'body',
-      tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)),
-      // tz.TZDateTime(
-      //   tz.local,
-      //   2024,
-      //   2,
-      //   10,
-      //   21,
-      //   30,
-      // ),
+      // tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)),
+      tz.TZDateTime(
+        tz.local,
+        currentDate.year,
+        currentDate.month,
+        currentDate.day,
+        schduledTime.hour,
+        schduledTime.minute,
+      ).subtract(Duration(minutes: 1)),
       details,
-      payload: 'zonedSchedule', androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-
+      payload: 'zonedSchedule',
+      uiLocalNotificationDateInterpretation:
+      UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 
@@ -154,8 +157,7 @@ class LocalNotificationService {
       currentTime.year,
       currentTime.month,
       currentTime.day,
-      currentTime.hour,
-      7,
+      21,
     );
     log("scheduledTime.year:${scheduleTime.year}");
     log("scheduledTime.month:${scheduleTime.month}");
@@ -164,7 +166,7 @@ class LocalNotificationService {
     log("scheduledTime.minute:${scheduleTime.minute}");
     log("scheduledTime.second:${scheduleTime.second}");
     if (scheduleTime.isBefore(currentTime)) {
-      scheduleTime = scheduleTime.add(const Duration(hours: 1));
+      scheduleTime = scheduleTime.add(const Duration(days: 1));
       log("AfterAddedscheduledTime.year:${scheduleTime.year}");
       log("AfterAddedscheduledTime.month:${scheduleTime.month}");
       log("AfterAddedscheduledTime.day:${scheduleTime.day}");
@@ -175,16 +177,16 @@ class LocalNotificationService {
     }
     await flutterLocalNotificationsPlugin.zonedSchedule(
       3,
-      'Daily Schduled Notification',
-      'body',
+      'Write your tasks for tomorrow',
+      'Have a productive day',
       // tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)),
       scheduleTime,
       details,
-      payload: 'zonedSchedule', androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-
+      payload: 'zonedSchedule',
+      uiLocalNotificationDateInterpretation:
+      UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
-
   static void cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);
   }

@@ -40,56 +40,55 @@ class TaskComponent extends StatelessWidget {
       onTap: () {
         showModalBottomSheet(
           context: context,
-          builder:
-              (context) => Container(
-                color: AppColors.bottomSheetBackground,
-                padding: EdgeInsets.all(24.r),
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    task.isCompleted == 1
-                        ? Container()
-                        : CustomButton(
-                          text: AppTexts.taskCompleted,
-                          color: AppColors.primaryColor,
-                          onTap: () {
-                            BlocProvider.of<TaskCubit>(
-                              originalContext,
-                            ).updateTask(task.id ?? 0);
-                            showToast(
-                              message: 'Task Completed',
-                              state: ToastStates.success,
-                            );
+          builder: (context) => Container(
+            color: AppColors.bottomSheetBackground,
+            padding: EdgeInsets.all(24.r),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                task.isCompleted == 1
+                    ? Container()
+                    : CustomButton(
+                        text: AppTexts.taskCompleted,
+                        color: AppColors.primaryColor,
+                        onTap: () {
+                          BlocProvider.of<TaskCubit>(
+                            originalContext,
+                          ).updateTask(task.id ?? 0);
+                          showToast(
+                            message: 'Task Completed',
+                            state: ToastStates.success,
+                          );
 
-                            Navigator.pop(originalContext);
-                          },
-                        ),
-                    CustomButton(
-                      text: AppTexts.deleteTask,
-                      color: AppColors.deleteTaskColor,
-                      onTap: () {
-                        BlocProvider.of<TaskCubit>(
-                          originalContext,
-                        ).deleteTask(task.id ?? 0);
-                        showToast(
-                          message: 'Task Deleted',
-                          state: ToastStates.success,
-                        );
-                        Navigator.pop(originalContext);
-                      },
-                    ),
-                    CustomButton(
-                      text: AppTexts.cancel,
-                      color: AppColors.primaryColor,
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
+                          Navigator.pop(originalContext);
+                        },
+                      ),
+                CustomButton(
+                  text: AppTexts.deleteTask,
+                  color: AppColors.deleteTaskColor,
+                  onTap: () {
+                    BlocProvider.of<TaskCubit>(
+                      originalContext,
+                    ).deleteTask(task.id ?? 0);
+                    showToast(
+                      message: 'Task Deleted',
+                      state: ToastStates.success,
+                    );
+                    Navigator.pop(originalContext);
+                  },
                 ),
-              ),
+                CustomButton(
+                  text: AppTexts.cancel,
+                  color: AppColors.primaryColor,
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
         );
       },
       child: Container(

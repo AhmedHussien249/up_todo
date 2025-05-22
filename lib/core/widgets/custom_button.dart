@@ -17,13 +17,16 @@ class CustomButton extends StatelessWidget {
         height: 48.h,
         padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 94.w),
         margin: EdgeInsets.only(bottom: 24.h),
-
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(8.r),
         ),
         child: Center(
-          child: Text(text, style: Theme.of(context).textTheme.displayMedium,textAlign: TextAlign.center,),
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.displayMedium,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

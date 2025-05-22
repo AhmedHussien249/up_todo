@@ -8,10 +8,9 @@ class AddTask extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       // resizeToAvoidBottomInset: false,
       appBar: AppBar(
-                title: Text(
+        title: Text(
           'Add Task',
           style: Theme.of(context).textTheme.displayLarge!,
         ),

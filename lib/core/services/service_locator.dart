@@ -5,7 +5,7 @@ import '../database/sqflite_helper/sqflite.dart';
 
 final sl = GetIt.instance;
 
-Future<void> setup() async{
+Future<void> setup() async {
   sl.registerLazySingleton<CacheHelper>(() => CacheHelper());
   sl.registerLazySingleton<SqfLiteHelper>(() => (SqfLiteHelper()));
 }

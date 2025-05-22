@@ -49,11 +49,11 @@ class AddTaskComponents extends StatelessWidget {
                       style: Theme.of(
                         context,
                       ).textTheme.displayMedium!.copyWith(
-                        fontSize: 20.sp,
-                        color: AppColors.textColor.withAlpha(
-                          (0.87 * 255).toInt(),
-                        ),
-                      ),
+                            fontSize: 20.sp,
+                            color: AppColors.textColor.withAlpha(
+                              (0.87 * 255).toInt(),
+                            ),
+                          ),
                     ),
                   ),
                   SizedBox(height: 24.h),
@@ -72,11 +72,11 @@ class AddTaskComponents extends StatelessWidget {
                       style: Theme.of(
                         context,
                       ).textTheme.displayMedium!.copyWith(
-                        fontSize: 20.sp,
-                        color: AppColors.textColor.withAlpha(
-                          (0.87 * 255).toInt(),
-                        ),
-                      ),
+                            fontSize: 20.sp,
+                            color: AppColors.textColor.withAlpha(
+                              (0.87 * 255).toInt(),
+                            ),
+                          ),
                     ),
                   ),
                   SizedBox(height: 24.h),
@@ -98,11 +98,11 @@ class AddTaskComponents extends StatelessWidget {
                       style: Theme.of(
                         context,
                       ).textTheme.displayMedium!.copyWith(
-                        fontSize: 20.sp,
-                        color: AppColors.textColor.withAlpha(
-                          (0.87 * 255).toInt(),
-                        ),
-                      ),
+                            fontSize: 20.sp,
+                            color: AppColors.textColor.withAlpha(
+                              (0.87 * 255).toInt(),
+                            ),
+                          ),
                     ),
                   ),
                   SizedBox(height: 24.h),
@@ -110,10 +110,9 @@ class AddTaskComponents extends StatelessWidget {
                     children: [
                       Expanded(
                         child: CustomTextFormFilled(
-                          hintText:
-                              BlocProvider.of<TaskCubit>(
-                                context,
-                              ).selectedStartTime,
+                          hintText: BlocProvider.of<TaskCubit>(
+                            context,
+                          ).selectedStartTime,
                           suffixIcon: IconButton(
                             onPressed: () async {
                               BlocProvider.of<TaskCubit>(
@@ -130,21 +129,20 @@ class AddTaskComponents extends StatelessWidget {
                             style: Theme.of(
                               context,
                             ).textTheme.displayMedium!.copyWith(
-                              fontSize: 20.sp,
-                              color: AppColors.textColor.withAlpha(
-                                (0.87 * 255).toInt(),
-                              ),
-                            ),
+                                  fontSize: 20.sp,
+                                  color: AppColors.textColor.withAlpha(
+                                    (0.87 * 255).toInt(),
+                                  ),
+                                ),
                           ),
                         ),
                       ),
                       SizedBox(width: 27.w),
                       Expanded(
                         child: CustomTextFormFilled(
-                          hintText:
-                              BlocProvider.of<TaskCubit>(
-                                context,
-                              ).selectedEndTime,
+                          hintText: BlocProvider.of<TaskCubit>(
+                            context,
+                          ).selectedEndTime,
                           suffixIcon: IconButton(
                             onPressed: () async {
                               BlocProvider.of<TaskCubit>(
@@ -161,17 +159,16 @@ class AddTaskComponents extends StatelessWidget {
                             style: Theme.of(
                               context,
                             ).textTheme.displayMedium!.copyWith(
-                              fontSize: 20.sp,
-                              color: AppColors.textColor.withAlpha(
-                                (0.87 * 255).toInt(),
-                              ),
-                            ),
+                                  fontSize: 20.sp,
+                                  color: AppColors.textColor.withAlpha(
+                                    (0.87 * 255).toInt(),
+                                  ),
+                                ),
                           ),
                         ),
                       ),
                     ],
                   ),
-
                   SizedBox(height: 24.h),
                   Text(
                     AppTexts.color,
@@ -194,42 +191,41 @@ class AddTaskComponents extends StatelessWidget {
                               context,
                             ).getColor(index),
                             radius: 18.r,
-                            child:
-                                index ==
-                                        BlocProvider.of<TaskCubit>(
-                                          context,
-                                        ).currentIndex
-                                    ? Icon(
-                                      Icons.check,
-                                      color: AppColors.backgroundColor,
-                                    )
-                                    : null,
+                            child: index ==
+                                    BlocProvider.of<TaskCubit>(
+                                      context,
+                                    ).currentIndex
+                                ? Icon(
+                                    Icons.check,
+                                    color: AppColors.backgroundColor,
+                                  )
+                                : null,
                           ),
                         );
                       },
-                      separatorBuilder:
-                          (context, index) => SizedBox(width: 8.w),
+                      separatorBuilder: (context, index) =>
+                          SizedBox(width: 8.w),
                       itemCount: 6,
                     ),
                   ),
                   SizedBox(height: 90.h),
                   state is InsertTaskLoadingState
                       ? const Center(
-                        child: CircularProgressIndicator(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryColor,
+                          ),
+                        )
+                      : CustomButton(
+                          text: AppTexts.createTask,
+                          onTap: () {
+                            if (BlocProvider.of<TaskCubit>(
+                              context,
+                            ).formKey.currentState!.validate()) {
+                              BlocProvider.of<TaskCubit>(context).insertTask();
+                            }
+                          },
                           color: AppColors.primaryColor,
                         ),
-                      )
-                      : CustomButton(
-                        text: AppTexts.createTask,
-                        onTap: () {
-                          if (BlocProvider.of<TaskCubit>(
-                            context,
-                          ).formKey.currentState!.validate()) {
-                            BlocProvider.of<TaskCubit>(context).insertTask();
-                          }
-                        },
-                        color: AppColors.primaryColor,
-                      ),
                 ],
               ),
             );

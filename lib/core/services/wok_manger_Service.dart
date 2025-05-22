@@ -1,6 +1,7 @@
 import 'package:workmanager/workmanager.dart';
 
 import 'local_notifications_service.dart';
+
 // steps
 //1.init work manager
 //2.excute our task.
@@ -12,7 +13,7 @@ class WorkManagerService {
     await Workmanager().registerPeriodicTask(
       'id1',
       'show simple notification',
-      frequency: const Duration(minutes: 15),
+      frequency: const Duration(hours: 12),
     );
   }
 

@@ -8,8 +8,6 @@ class CacheHelper {
 
   Future<void> init() async {
     sharedPreferences = await SharedPreferences.getInstance();
-      
-
   }
 
   String? getDataString({

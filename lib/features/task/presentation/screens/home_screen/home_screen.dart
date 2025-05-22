@@ -45,7 +45,10 @@ class HomeScreen extends StatelessWidget {
                         icon: Icon(
                           context.read<TaskCubit>().isDark
                               ? Icons.light_mode
-                              : Icons.dark_mode,color: context.read<TaskCubit>().isDark?Colors.white:Colors.black,
+                              : Icons.dark_mode,
+                          color: context.read<TaskCubit>().isDark
+                              ? Colors.white
+                              : Colors.black,
                         ),
                         onPressed: () {
                           context.read<TaskCubit>().changeTheme();
@@ -63,8 +66,8 @@ class HomeScreen extends StatelessWidget {
                             )
                         ? 'Today'
                         : DateFormat('EEEE').format(
-                          context.read<TaskCubit>().selectedDate,
-                        ), // اسم اليوم
+                            context.read<TaskCubit>().selectedDate,
+                          ), // اسم اليوم
                     style: Theme.of(
                       context,
                     ).textTheme.displayLarge!.copyWith(fontSize: 24.sp),
@@ -76,7 +79,6 @@ class HomeScreen extends StatelessWidget {
                     selectionColor: AppColors.primaryColor,
                     width: 51.w,
                     height: 94.h,
-
                     selectedTextColor: Colors.white,
                     dayTextStyle: Theme.of(
                       context,
@@ -95,18 +97,17 @@ class HomeScreen extends StatelessWidget {
                   BlocProvider.of<TaskCubit>(context).tasks.isEmpty
                       ? const NoTaskComponent()
                       : Expanded(
-                        child: ListView.builder(
-                          itemBuilder:
-                              (context, index) => TaskComponent(
-                                task:
-                                    BlocProvider.of<TaskCubit>(
-                                      context,
-                                    ).tasks[index],
-                              ),
-                          itemCount:
-                              BlocProvider.of<TaskCubit>(context).tasks.length,
+                          child: ListView.builder(
+                            itemBuilder: (context, index) => TaskComponent(
+                              task: BlocProvider.of<TaskCubit>(
+                                context,
+                              ).tasks[index],
+                            ),
+                            itemCount: BlocProvider.of<TaskCubit>(context)
+                                .tasks
+                                .length,
+                          ),
                         ),
-                      ),
                 ],
               ),
             ),

@@ -22,7 +22,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       //  backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
@@ -31,116 +30,114 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           child: PageView.builder(
             itemCount: OnBoardingModel.onBoardingList.length,
             controller: controller,
-            itemBuilder:
-                (context, index) => Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //skip text
-                    if (index == 2)
-                      SizedBox(height: 54.h)
-                    else
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: CustomTextButton(
-                          text: AppTexts.skip,
-                          onPressed: () {
-                            controller.jumpToPage(2);
-                          },
-                        ),
-                      ),
+            itemBuilder: (context, index) => Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //skip text
+                if (index == 2)
+                  SizedBox(height: 54.h)
+                else
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: CustomTextButton(
+                      text: AppTexts.skip,
+                      onPressed: () {
+                        controller.jumpToPage(2);
+                      },
+                    ),
+                  ),
 
-                    Spacer(),
-                    //image
-                    Image.asset(
-                      OnBoardingModel.onBoardingList[index].image,
-                      height: 300.h,
-                      width: 300.w,
+                Spacer(),
+                //image
+                Image.asset(
+                  OnBoardingModel.onBoardingList[index].image,
+                  height: 300.h,
+                  width: 300.w,
+                ),
+                SizedBox(height: 15.h),
+                SmoothPageIndicator(
+                  controller: controller,
+                  count: 3,
+                  effect: ExpandingDotsEffect(
+                    activeDotColor: AppColors.primaryColor,
+                    dotColor: AppColors.textColor.withAlpha(
+                      (0.87 * 255).toInt(),
                     ),
-                    SizedBox(height: 15.h),
-                    SmoothPageIndicator(
-                      controller: controller,
-                      count: 3,
-                      effect: ExpandingDotsEffect(
-                        activeDotColor: AppColors.primaryColor,
-                        dotColor: AppColors.textColor.withAlpha(
-                          (0.87 * 255).toInt(),
-                        ),
-
-                        dotHeight: 4.h,
-                        dotWidth: 26.w,
-                      ),
-                    ),
-                    //dots
-                    SizedBox(height: 70.h),
-                    // title
-                    Text(
-                      OnBoardingModel.onBoardingList[index].title,
-                      style: Theme.of(context).textTheme.displayLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 42.h),
-                    // subtitle
-                    Text(
-                      OnBoardingModel.onBoardingList[index].subTitle,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.displayMedium!.copyWith(
+                    dotHeight: 4.h,
+                    dotWidth: 26.w,
+                  ),
+                ),
+                //dots
+                SizedBox(height: 70.h),
+                // title
+                Text(
+                  OnBoardingModel.onBoardingList[index].title,
+                  style: Theme.of(context).textTheme.displayLarge,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 42.h),
+                // subtitle
+                Text(
+                  OnBoardingModel.onBoardingList[index].subTitle,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.displayMedium!.copyWith(
                         color: AppColors.textColor.withAlpha(
                           (0.87 * 255).toInt(),
                         ),
                       ),
-                    ),
-                    Spacer(),
+                ),
+                Spacer(),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // back button
-                        if (index == 0)
-                          Container()
-                        else
-                          CustomTextButton(
-                            text: AppTexts.back,
-                            onPressed: () {
-                              controller.previousPage(
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeIn,
-                              );
-                            },
-                          ),
-                        // next button
-                        if (index != 2)
-                          CustomElevatedButton(
-                            text: AppTexts.next,
-                            onPressed: () {
-                              controller.nextPage(
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeIn,
-                              );
-                            },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // back button
+                    if (index == 0)
+                      Container()
+                    else
+                      CustomTextButton(
+                        text: AppTexts.back,
+                        onPressed: () {
+                          controller.previousPage(
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeIn,
+                          );
+                        },
+                      ),
+                    // next button
+                    if (index != 2)
+                      CustomElevatedButton(
+                        text: AppTexts.next,
+                        onPressed: () {
+                          controller.nextPage(
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeIn,
+                          );
+                        },
+                      )
+                    else
+                      CustomElevatedButton(
+                        text: AppTexts.getStarted,
+                        onPressed: () async {
+                          await sl<CacheHelper>()
+                              .saveData(
+                            key: AppTexts.onBoardingKey,
+                            value: true,
                           )
-                        else
-                          CustomElevatedButton(
-                            text: AppTexts.getStarted,
-                            onPressed: () async {
-                              await sl<CacheHelper>()
-                                  .saveData(
-                                    key: AppTexts.onBoardingKey,
-                                    value: true,
-                                  )
-                                  .then((value) {
-                                    Navigator.pushReplacementNamed(
-                                      context,
-                                      'Home',
-                                    );
-                                  });
-                            },
-                          ),
-                      ],
-                    ),
+                              .then((value) {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              'Home',
+                            );
+                          });
+                        },
+                      ),
                   ],
                 ),
+              ],
+            ),
           ),
         ),
       ),

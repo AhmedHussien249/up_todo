@@ -26,18 +26,18 @@ class CustomTextFormFilled extends StatelessWidget {
       controller: controller,
       validator: validator,
       readOnly: suffixIcon != null ? true : false,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color:  Colors.white),
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: Theme.of(context).textTheme.displayMedium,
         label: label,
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: suffixIcon,
-        filled: true,
-        fillColor: AppColors.textFilledFillColor,
+        // filled: true,
+        // fillColor: AppColors.textFilledFillColor,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.r),
-          borderSide: BorderSide(color: AppColors.textFilledBorder,width: 2.w),
+          borderSide: BorderSide(color: AppColors.textFilledBorder, width: 2.w),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.r),

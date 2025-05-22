@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:up_todo_project/core/services/local_notifications_service.dart';
 
 import '../../../../core/database/cache/cache_helper.dart';
 import '../../../../core/database/sqflite_helper/sqflite.dart';
@@ -42,7 +43,7 @@ class TaskCubit extends Cubit<TaskState> {
       emit(GetDateErrorState());
     }
   }
-
+late TimeOfDay scheduledTime;
   void getStartTime(context) async {
     emit(GetStartTimeLoadingState());
     TimeOfDay? pickedStartTime = await showTimePicker(
@@ -52,9 +53,11 @@ class TaskCubit extends Cubit<TaskState> {
 
     if (pickedStartTime != null) {
       selectedStartTime = pickedStartTime.format(context);
+      scheduledTime = pickedStartTime;
       emit(GetStartTimeSuccessState());
     } else {
       selectedStartTime = DateFormat('hh:mm a').format(DateTime.now());
+      scheduledTime = TimeOfDay(hour: selectedDate.hour, minute: selectedDate.minute);
       emit(GetStartTimeErrorState());
     }
   }
@@ -136,6 +139,7 @@ class TaskCubit extends Cubit<TaskState> {
           color: currentIndex,
         ),
       );
+      LocalNotificationService.showSchduledNotification(currentDate: selectedDate, schduledTime: scheduledTime);
       getTasks();
       titleController.clear();
       noteController.clear();
@@ -152,63 +156,55 @@ class TaskCubit extends Cubit<TaskState> {
 
   Future<void> getTasks() async {
     emit(GetTaskLoadingState());
-    await sl<SqfLiteHelper>()
-        .getFromDB()
-        .then((value) {
-          tasks =
-              value
-                  .map((e) => TaskModel.fromJson(e))
-                  .toList()
-                  .where(
-                    (element) =>
-                        element.date == DateFormat('yMd').format(selectedDate),
-                  )
-                  .toList();
-          emit(GetTaskSuccessState());
-        })
-        .catchError((e) {
-          log(e.toString());
-          emit(GetTaskErrorState());
-        });
+    await sl<SqfLiteHelper>().getFromDB().then((value) {
+      tasks = value
+          .map((e) => TaskModel.fromJson(e))
+          .toList()
+          .where(
+            (element) => element.date == DateFormat('yMd').format(selectedDate),
+          )
+          .toList();
+      emit(GetTaskSuccessState());
+    }).catchError((e) {
+      log(e.toString());
+      emit(GetTaskErrorState());
+    });
   }
 
   Future<void> updateTask(int id) async {
     emit(UpdateTaskLoadingState());
-    await sl<SqfLiteHelper>()
-        .updatedDB(id)
-        .then((value) async {
-          emit(UpdateTaskSuccessState());
-          await Future.delayed(Duration(seconds: 1));
-          getTasks();
-        })
-        .catchError((e) {
-          log(e.toString());
-          emit(UpdateTaskErrorState());
-        });
+    await sl<SqfLiteHelper>().updatedDB(id).then((value) async {
+      emit(UpdateTaskSuccessState());
+      await Future.delayed(Duration(seconds: 1));
+      getTasks();
+    }).catchError((e) {
+      log(e.toString());
+      emit(UpdateTaskErrorState());
+    });
   }
 
   Future<void> deleteTask(int id) async {
     emit(DeleteTaskLoadingState());
-    await sl<SqfLiteHelper>()
-        .deleteFromDB(id)
-        .then((value) async {
-          emit(DeleteTaskSuccessState());
-          await Future.delayed(Duration(seconds: 1));
-          getTasks();
-        })
-        .catchError((e) {
-          log(e.toString());
-          emit(DeleteTaskErrorState());
-        });
+    await sl<SqfLiteHelper>().deleteFromDB(id).then((value) async {
+      emit(DeleteTaskSuccessState());
+      await Future.delayed(Duration(seconds: 1));
+      getTasks();
+    }).catchError((e) {
+      log(e.toString());
+      emit(DeleteTaskErrorState());
+    });
   }
+
   bool isDark = false;
-  void changeTheme()async{
+
+  void changeTheme() async {
     isDark = !isDark;
     await sl<CacheHelper>().saveData(key: 'isDark', value: isDark);
     emit(ChangeThemeState());
   }
-void getTheme()async{
-  isDark = await sl<CacheHelper>().getData(key: 'isDark');
-  emit(GetThemeState());
-}
+
+  void getTheme() async {
+    isDark = await sl<CacheHelper>().getData(key: 'isDark') ?? true;
+    emit(GetThemeState());
+  }
 }

@@ -103,8 +103,7 @@ class SqfLiteHelper {
       version: 1,
       onCreate: (Database db, int v) async {
         //step 2 => create table
-        return await db
-            .execute('''
+        return await db.execute('''
       CREATE TABLE Tasks (
         id INTEGER PRIMARY KEY AUTOINCREMENT ,
         title TEXT,
@@ -114,8 +113,7 @@ class SqfLiteHelper {
         endTime TEXT,
         color INTEGER,
         isCompleted INTEGER )
-      ''')
-            .then((value) => log('DB created successfully'));
+      ''').then((value) => log('DB created successfully'));
       },
       onOpen: (db) => log('Database opened'),
     ).then((value) => db = value);
