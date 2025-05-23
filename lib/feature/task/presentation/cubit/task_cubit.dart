@@ -30,7 +30,7 @@ class TaskCubit extends Cubit<TaskState> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
-      lastDate: DateTime(2025),
+      lastDate: DateTime(20100),
       // initialDatePickerMode: DatePickerMode.day,
       // initialEntryMode: DatePickerEntryMode.inputOnly,
     );
@@ -214,7 +214,7 @@ class TaskCubit extends Cubit<TaskState> {
   }
 
   void getTheme() async {
-    isDark = await sl<CacheHelper>().getData(key: 'isDark');
+    isDark = await sl<CacheHelper>().getData(key: 'isDark')??false;
     emit(GetThemeState());
   }
 }

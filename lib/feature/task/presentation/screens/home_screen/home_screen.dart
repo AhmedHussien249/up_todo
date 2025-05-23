@@ -30,7 +30,9 @@ class HomeScreen extends StatelessWidget {
                   //date now
                   Row(
                     children: [
-                      Text(DateFormat.yMMMMd().format(DateTime.now()),
+                      Text(
+                          DateFormat.yMMMMd().format(
+                              BlocProvider.of<TaskCubit>(context).selctedDate),
                           style: Theme.of(context).textTheme.displayLarge),
                       const Spacer(),
                       IconButton(
@@ -50,7 +52,14 @@ class HomeScreen extends StatelessWidget {
                     height: 12,
                   ),
                   //Today
-                  Text(AppStrings.today,
+                  Text(
+                      DateFormat.yMMMMd().format(
+                                  BlocProvider.of<TaskCubit>(context)
+                                      .selctedDate) ==
+                              DateFormat.yMMMMd().format(DateTime.now())
+                          ? AppStrings.today
+                          : DateFormat.EEEE().format(
+                              BlocProvider.of<TaskCubit>(context).selctedDate),
                       style: Theme.of(context).textTheme.displayLarge),
                   //date picker
                   DatePicker(
@@ -125,7 +134,9 @@ class TaskComponent extends StatelessWidget {
     super.key,
     required this.taskModel,
   });
+
   final TaskModel taskModel;
+
   Color getColor(index) {
     switch (index) {
       case 0:

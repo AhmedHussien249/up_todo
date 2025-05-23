@@ -12,8 +12,8 @@ import '../../../../task/presentation/screens/home_screen/home_screen.dart';
 import '../../../data/model/on_boarding_model.dart';
 
 class OnBoaringScreens extends StatelessWidget {
-  OnBoaringScreens({super.key});
-  PageController controller = PageController();
+   OnBoaringScreens({super.key});
+ final PageController controller = PageController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(

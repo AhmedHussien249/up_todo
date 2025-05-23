@@ -25,7 +25,7 @@ class AddTaskScreen extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.arrow_back_ios_new_outlined)),
+            icon:  Icon(Icons.arrow_back_ios_new_outlined,color:  BlocProvider.of<TaskCubit>(context).isDark ? AppColors.white : AppColors.background,)),
         title: Text(
           AppStrings.addTask,
           style: Theme.of(context).textTheme.displayLarge,

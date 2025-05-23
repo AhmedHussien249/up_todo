@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../core/utils/app_colors.dart';
+import '../cubit/task_cubit.dart';
 
 class AddTaskComponent extends StatelessWidget {
   const AddTaskComponent({
@@ -32,6 +36,7 @@ class AddTaskComponent extends StatelessWidget {
           readOnly: readOnly,
           controller: controller,
           validator: validator,
+          style: TextStyle(color: BlocProvider.of<TaskCubit>(context).isDark ? AppColors.white : AppColors.background),
           decoration: InputDecoration(
             //hint
             hintText: hintText,
